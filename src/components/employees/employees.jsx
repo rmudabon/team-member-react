@@ -1,51 +1,37 @@
-import { useState } from "react";
 
-const Employees = () => {
+import femaleProfile from '../../images/femaleProfile.jpg'
+import maleProfile from '../../images/maleProfile.jpg';
 
-    const [employees, setEmployees] = useState([
-        {
-            id: 1,
-            firstName: 'Bob',
-            lastName: 'Jones',
-            designation: 'JavaScript Developer',
-            gender: 'male',
-            teamName: 'Team A'
-        },
-        {
-            id: 2,
-            firstName: 'Jill',
-            lastName: 'Jones',
-            designation: 'NodeJS Developer',
-            gender: 'female',
-            teamName: 'Team B'
-        },
-        {
-            id: 4,
-            firstName: 'Galili',
-            lastName: 'Shepherd',
-            designation: 'Java Developer',
-            gender: 'male',
-            teamName: 'Team C'
-        },
-        {
-            id: 5,
-            firstName: 'Mark',
-            lastName: 'Koe',
-            designation: 'Database Administrator',
-            gender: 'male',
-            teamName: 'Team A'
-        },
-    ])
+const Employees = ({employees, selectedTeam, employeeCardClick, changeTeam}) => {
 
     return (
-        <main>
-            {
-                employees.map((employee) => (
-                    <div>
-                        <p>{employee.firstName + ' ' + employee.lastName}</p>
+        <main className="container">
+            <div className="row justify-content-center mt-2 mb-2">
+                <div className="col-7">
+                    <select className="form-select form-select-lg" value={selectedTeam} onChange={changeTeam}>
+                        <option value="Team A">Team A</option>
+                        <option value="Team B">Team B</option>
+                        <option value="Team C">Team C</option>
+                    </select>
+                </div>
+            </div>
+            <div className="row justify-content-center mt-4 mb-4">
+                <div className="col-8">
+                    <div className="card-collection">
+                        {
+                            employees.map((employee) => (
+                                <div key={employee.id} id={employee.id} className={employee.teamName === selectedTeam ? 'card selected-team' : 'card'} style={{cursor: 'pointer'}} onClick={employeeCardClick}>
+                                    <img src={(employee.gender === 'female' ? femaleProfile : maleProfile)} alt='Female Profile' className="card-img-top"/>
+                                    <div className="card-body">
+                                        <h5 className="card-title">{employee.firstName + ' ' + employee.lastName}</h5>
+                                        <p className="card-text"><b>Designation: </b>{employee.designation}</p>
+                                    </div>
+                                </div>
+                            ))
+                        }
                     </div>
-                ))
-            }
+                </div>
+            </div>
         </main>
     )
 }
